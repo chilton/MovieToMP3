@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Check if input file was provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 /path/to/input_movie"
+    exit 1
+fi
+
+# Get input path and filename without extension
+input="$1"
+filename=$(basename -- "$input")
+name="${filename%.*}"
+
+# Set output path to Desktop
+output="$HOME/Desktop/${name}.mp3"
+
+# Run ffmpeg to extract audio
+ffmpeg -i "$input" -vn -acodec libmp3lame -ab 192k "$output"
